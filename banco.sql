@@ -20,17 +20,23 @@ DROP DATABASE IF EXISTS loja_antiga; -- exclui completamente um banco de dados d
 -- traduzindo: exclua o banco de dados se existir de nome "loja_antiga"
 -- se o banco nao existir, o SGBD apenas mostra um aviso, sem travar o processo
 
-CREATE TABLE clientes (
-    id              INT             NOT NULL AUTO_INCREMENT,
-    nome            VARCHAR(100)    NOT NULL,
-    email           VARCHAR(150)    UNIQUE,
+CREATE TABLE clientes ( --aqui se cria uma tabela chamada "clientes" dentro do schema vendas (pq executamos
+-- USE loja antes)
+    id              INT             NOT NULL AUTO_INCREMENT, --INT é o tipo de dado (coluna só aceita numeros inteiros que aumentam sozinhos - por conta do AUTO-INCREMENT)
+    nome            VARCHAR(100)    NOT NULL, -- NOT NULL = o campo nunca pode estar vazio (a coluna nao pode ficar em branco)
+    email           VARCHAR(150)    UNIQUE, --varchar(x) é uma string de no maximo x caracteres 
+-- UNIQUE = o banco bloqueia emails iguais (ele verifica a tabela pra ver se ja tem o registro, se sim...bloqueia, se não...permite registrar)
+-- se tu colocar uma string de 6 caracteres dentro dum varchar(10), entao sobra 4 espaços
+-- o varchar remove esses 4 espaços automaticamente, economizando espaço na memória
     cpf             CHAR(11)        UNIQUE NOT NULL,
-    data_nascimento DATE,
+-- o char é a mesma coisa, só que de tamanho fixo
+-- ou seja, se colocar uma string de 6 num char(10), os 4 espaços vazios ficam lá (não são removidos)
+    data_nascimento DATE, --armazena uma data sem horario (sem not null, ou seja, pode ficar vazia)
     saldo           DECIMAL(10, 2)  DEFAULT 0.00,
     ativo           BOOLEAN         DEFAULT TRUE,
     criado_em       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
     atualizado_em   TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id) -- apenas diz pro sistema: "a coluna ID é a chave primaria da tabela"
 );
 
 CREATE TABLE categorias (
