@@ -2,13 +2,23 @@
 -- DDL - DATA DEFINITION LANGUAGE
 -- ============================================================
 
-CREATE DATABASE loja;
+CREATE DATABASE loja; -- conjunto de tabelas e as relações entre elas 
+-- crie um banco de dados chamado "loja" (no MySQL que é mais simples)
+-- crie um espaço físico no armazenamento chamado "loja" (isso no PostgreSQL) 
 
-USE loja;
+USE loja; -- diz ao SGBD onde é pra fazer as alterações que virão posteriormente
 
-CREATE SCHEMA vendas;
+CREATE SCHEMA vendas; 
+-- se tiver usando MySql não tem separação entre lógico e física, ou seja, CREATE SCHEMA = CREATE DATABASE
+-- se tiver usando PostgreSQL: dentro do servidor foi criado o espaço físico de armazenamento com CREATE DATABASE
+-- e, com CREATE SCHEMA, o modelo lógico que fica dentro da DATABASE
+-- o SCHEMA vendas é totalmente (por segurança) separado do SCHEMA clientes (apenas no PostgreSQL)
+-- na pratica, o SCHEMA é uma pasta com tabelas dentro. Por exemplo, no SCHEMA vendas tem as tabelas
+-- pedidos, notas_fiscais e etc
 
-DROP DATABASE IF EXISTS loja_antiga;
+DROP DATABASE IF EXISTS loja_antiga; -- exclui completamente um banco de dados do sistema
+-- traduzindo: exclua o banco de dados se existir de nome "loja_antiga"
+-- se o banco nao existir, o SGBD apenas mostra um aviso, sem travar o processo
 
 CREATE TABLE clientes (
     id              INT             NOT NULL AUTO_INCREMENT,
