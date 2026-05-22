@@ -22,6 +22,7 @@ DROP DATABASE IF EXISTS loja_antiga; -- exclui completamente um banco de dados d
 
 CREATE TABLE clientes ( --aqui se cria uma tabela chamada "clientes" dentro do schema vendas (pq executamos
 -- USE loja antes)
+-- o padrão é: nome da coluna, tipo de valor que entra nela, configurações
     id              INT             NOT NULL AUTO_INCREMENT, --INT é o tipo de dado (coluna só aceita numeros inteiros que aumentam sozinhos - por conta do AUTO-INCREMENT)
     nome            VARCHAR(100)    NOT NULL, -- NOT NULL = o campo nunca pode estar vazio (a coluna nao pode ficar em branco)
     email           VARCHAR(150)    UNIQUE, --varchar(x) é uma string de no maximo x caracteres 
@@ -31,15 +32,31 @@ CREATE TABLE clientes ( --aqui se cria uma tabela chamada "clientes" dentro do s
     cpf             CHAR(11)        UNIQUE NOT NULL,
 -- o char é a mesma coisa, só que de tamanho fixo
 -- ou seja, se colocar uma string de 6 num char(10), os 4 espaços vazios ficam lá (não são removidos)
-    data_nascimento DATE, --armazena uma data sem horario (sem not null, ou seja, pode ficar vazia)
-    saldo           DECIMAL(10, 2)  DEFAULT 0.00,
-    ativo           BOOLEAN         DEFAULT TRUE,
-    criado_em       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP,
+    data_nascimento DATE, --armazena uma data sem horario (sem not null, ou seja, pode ficar vazia) no formato AAAA-MM-DD
+    saldo           DECIMAL(10, 2)  DEFAULT 0.00, --DECIMAL(x, y) indica que um decimal de no maximo x digitos (esquerda+direita da
+    --virgula) e y casas decimais...DEFAULT é o valor padrão até ser substituido por um valor que o cara queira (no caso o padrão é oq vem depois, entao 0.00)
+    ativo           BOOLEAN         DEFAULT TRUE, --booleano é TRUE (1) ou FALSE (0), só que sempre inicia com TRUE (devido ao DEFAULT)    
+    criado_em       TIMESTAMP       DEFAULT CURRENT_TIMESTAMP, 
+    -- TIMESTAMP é tipo o DATA, só que mais preciso (vem em formato AAAA-MM-DD HH:MM:SS)
+    -- o CURRENT_TIMESTAMP é uma função interna do banco que "tira um print da hora" quando a linha é preenchida com INSERT com base no servidor
+    --ali significa, preencha a coluna "criado_em" com valores padrão, e faça esse valor padrão "batendo um print" da hora
     atualizado_em   TIMESTAMP       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    --ON UPDATE é um gatilho que diz "se alguem rodar UPDATE nessa coluna, tu permuta o valor antigo pelo novo"
+    --perceba que a coluna "criado_em" não tem o valor de captura temporal alterado momento algum...já a "atualizado_em" muda o valor toda hora
+    --no caso, ele troca o "print da hora" antigo pelo atual a cada atualização 
     PRIMARY KEY (id) -- apenas diz pro sistema: "a coluna ID é a chave primaria da tabela"
+    --funciona assim:
+    --vamos supor que a tabela "usuarios" possui uma coluna "R.A"...daí ele vai "importar" essa coluna de outra tabela chamada "alunos"
+    --a tabela usuário possui uma coluna identificadora (chave primaria, no caso a coluna "cpf") e uma coluna importada de outra (chamada chave estrangeira)
+    --a chave estrangeira necessariamente é a chave primaria de outra tabela, não pode ser qualquer coluna da outra tabela
+    -- a chave primaria tem que ser UNIQUE e NOT NULL
 );
 
-CREATE TABLE categorias (
+-- tu pode fazer do jeito que quiser, mas é padrão definir primeiro as colunas e depois no final definir quem é chave primaria e estrangeira
+-- ou pode também definir tudo na mesma linha, tipo
+-- id INT NOT NULL AUTO_INCREMENT PRIMARY KEY (forma Inline)
+
+CREATE TABLE categorias ( --bom, aqui nada de novo
     id   INT         NOT NULL AUTO_INCREMENT,
     nome VARCHAR(80) NOT NULL,
     PRIMARY KEY (id)
