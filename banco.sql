@@ -69,8 +69,8 @@ CREATE TABLE produtos (
     estoque      INT            DEFAULT 0,
     categoria_id INT,
     ativo        BOOLEAN        DEFAULT TRUE,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_produto_categoria FOREIGN KEY (categoria_id)
+    PRIMARY KEY (id), --definiu a chave primaria, ou seja, a coluna identificadora
+    CONSTRAINT fk_produto_categoria FOREIGN KEY (categoria_id) --
         REFERENCES categorias (id)
         ON DELETE SET NULL
         ON UPDATE CASCADE

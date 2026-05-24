@@ -1,0 +1,25 @@
+{
+  "name": "teste_de_documentacao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codigo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thales-fratarcangeli/estudos_e_documentacao.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thales-fratarcangeli/estudos_e_documentacao/issues"
+  },
+  "homepage": "https://github.com/thales-fratarcangeli/estudos_e_documentacao#readme",
+  "dependencies": {
+    "hummus": "^1.0.118",
+    "pdf-lib": "^1.17.1"
+  }
+}
